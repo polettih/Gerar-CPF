@@ -49,5 +49,5 @@ Este projeto é apenas para **fins educacionais e de teste**. O uso de CPFs gera
 
 ## ✍️ Autor
 
-Desenvolvido por [Seu Nome Aqui](https://github.com/seu-usuario).  
+Desenvolvido por [Henrique Poletti](https://github.com/polettih).  
 Contribuições e sugestões são bem-vindas!
