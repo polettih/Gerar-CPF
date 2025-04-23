@@ -1,48 +1,20 @@
 from random import randint
 
-nove_digitos = ''
-for contar_nove in range(9):
-    nove_digitos +=  str(randint(0,9))    
+def gerar_cpf(formatado=False):
+    nove_digitos = ''.join([str(randint(0, 9)) for _ in range(9)])
 
-contador_regressivo_1 = 10 
-#Variavel que recebe o valor do primeiro digito do CPF depois do traço
-resultado_digito_1 = 0          
-#Lista que recebe todos os numeros do CPF, um a um
-numeros_int = []                
+    soma_1 = sum(int(n) * i for n, i in zip(nove_digitos, range(10, 1, -1)))
+    digito_1 = (soma_1 * 10 % 11) % 10
 
-for digito_1 in nove_digitos:
-    digito_1 = int(digito_1)  
-    #Soma-se o resultado da conta do ciclo passado a do atual                              
-    resultado_digito_1 += digito_1 * contador_regressivo_1    
-    contador_regressivo_1 -= 1   
-    #Em cada volta adiciona o valor a lista "numeros_int"                           
-    numeros_int.append(digito_1)                            
+    soma_2 = sum(int(n) * i for n, i in zip(nove_digitos + str(digito_1), range(11, 1, -1)))
+    digito_2 = (soma_2 * 10 % 11) % 10
 
-digito_1 = (resultado_digito_1 * 10) % 11
-#Se o resto for <= 9 o primeiro numero é o da variavel, se for maior será 0
-digito_1 = digito_1 if digito_1 <= 9 else 0     
+    cpf = f'{nove_digitos}{digito_1}{digito_2}'
 
-#Adiciona o resultado a lista "numeros_int"
-numeros_int.append(digito_1)                    
+    if formatado:
+        cpf = f'{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}'
 
+    return cpf
 
-#Fase 2
-contador_regressivo_2 = 11          
-resultado_digito_2 = 0              
-
-for digito_2 in numeros_int:
-    resultado_digito_2 += digito_2 * contador_regressivo_2  
-    contador_regressivo_2 -= 1                              
-
-digito_2 = (resultado_digito_2 * 10) % 11          
-#Se "digito_2" for menor ou igual a 9 "digito_2" será igual ao resto, caso contrario será 0
-digito_2 = digito_2 if digito_2 <= 9 else 0         
-
-#Adiciona o "digito_2" na lista "numeros_int"
-numeros_int.append(digito_2)        
-
-#CPF inteiro e concatenado
-cpf_gerado = int(f'{nove_digitos}{digito_1}{digito_2}')     
-
-print(cpf_gerado)
-
+# Exemplo de uso:
+print(gerar_cpf(formatado=True))
